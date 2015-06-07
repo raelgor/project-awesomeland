@@ -1,0 +1,10 @@
+{
+  "name": "SwiftBalancer",
+  "description": "A fast, lite and flexible load balancer.",
+  "author": "Kosmas Papadatos <kosmas.papadatos@gmail.com>",
+  "dependencies": {
+    "express": "^4.9.5",
+    "http-proxy": "^1.8.1",
+    "redis": "^0.12.1"
+  }
+}
