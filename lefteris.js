@@ -48,7 +48,7 @@ var lefteris = {
 
 
   //$('#l-send').click(lefteris.send);
-$('#l-send').click(lefteris.viewImage);
+//$('#l-send').click(lefteris.viewImage);
 $('#l-input').keyup(function (e) {
     e.keyCode == 13 && lefteris.viewImage();
 
