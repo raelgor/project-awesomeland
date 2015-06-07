@@ -5,7 +5,8 @@ var http = require('http'),
     jade = require('jade'),
     package = require('./package.json'),
     bouncer = require('http-bouncer'),
-    compression = require('compression');
+    compression = require('compression'),
+    shortid = require('shortid');
 
 // Add bouncing rules
 bouncer.config.JSON_API_CALLS.push({
