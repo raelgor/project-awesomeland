@@ -78,7 +78,7 @@ server.use(function (req, res, next) {
 });
 
 // Directly access static content
-server.use(express.static(__dirname + '/'));
+server.use(express.static(__dirname + '/assets/'));
 
 // Bind to port and start
 http.createServer(server).listen(81, '10.240.203.106');
