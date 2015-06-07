@@ -82,3 +82,8 @@ server.use(express.static(__dirname + '/'));
 
 // Bind to port and start
 http.createServer(server).listen(81, '10.240.203.106');
+
+// Immortalize process
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
