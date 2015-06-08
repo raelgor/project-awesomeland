@@ -2,16 +2,25 @@ var http = require('http'),
     express = require('express'),
     bodyParser = require('body-parser'),
     server = express(),
-    jade = require('jade'),
+    jade = global.jade = require('jade'),
     package = require('./package.json'),
     bouncer = require('http-bouncer'),
     compression = require('compression'),
     ws = require('ws'),
+    fs = require('fs'),
     _ = require('lodash'),
+    prompt = require('prompt'),
     wsClients = [],
+    path = require('path'),
     shortid = require('shortid'),
     api = {},
     httpServer = false;
+
+fs.readdirSync(path.resolve(__dirname + '/api')).toString().split(',').forEach(function (module) {
+
+    api[module.split('api.')[1]] = require(path.resolve(__dirname + '/api/' + module));
+
+});
 
 // Add bouncing rules
 bouncer.config.JSON_API_CALLS.push({
@@ -24,6 +33,19 @@ bouncer.config.JSON_API_CALLS.push({
     INCLUDE_IP: true,
     INCLUDE_FROM_MATCH: ["username"]
 });
+
+// Debugger CLI
+prompt.start();
+prompt.message = "";
+prompt.delimiter = "";
+
+(function contPrompt() {
+    prompt.get([{ name: "code", message: " " }], function (err, result) {
+        try { console.log(eval(result.code)); } catch (x) { console.log(x); }
+        result.code != "^C" && contPrompt();
+    });
+    console.log('..\n');
+})();
 
 // Limiting request size (general upload size)
 server.use(bodyParser.raw({
@@ -43,6 +65,9 @@ server.use('*', function (req, res, next) {
 server.use(bodyParser.json({
     extended: true
 }));
+
+// Place bouncer for JSON API only
+server.use('*', function (req, res, next) { bouncer(req, res, next, true); }); 
 
 // Use compression on all requests
 server.use(compression({ filter: function () { return true; } }));
@@ -71,7 +96,25 @@ server.get('/', function (req, res, next) {
 // Handle API calls
 server.post('/api', function (req, res, next) {
     
-    res.send('ti leei1' + req.body.value);
+    try {
+
+        var reqApi = api[req.body.api][req.body.request];
+        if (reqApi.auth && !reqApi.ws) {
+
+            db.find({
+                tokens: { $elemMatch: { token: String(req.body.token) } }
+            }, { _id: 1 }).toArray(function (err, user) {
+
+                if (err) return res.send('{"message":"bad_request"}');
+
+                reqApi(req.body, db, req, res, user[0]);
+
+            });
+
+        } else if (!reqApi.ws) reqApi(req.body, db, req, res);
+        else res.send('{"message":"bad_request"}');
+
+    } catch (x) { res.send('{"message":"bad_request"}'); }
 
 });
 
