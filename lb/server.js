@@ -19,7 +19,7 @@ var HttpServer = express();
 var servers = config.servers || [];
 
 // Proxy server
-var proxy = httpProxy.createProxyServer();
+var proxy = httpProxy.createProxyServer({ ws: true });
 
 // Load splitter
 function getProxyTarget() {
@@ -41,7 +41,7 @@ function requestHandler(req, res) {
             '::' +
             Math.floor(process.memoryUsage().rss / 1024 / 1024) + ' MB'
         );
-    } else proxy.web(req, res, { target:getProxyTarget() })
+    } else proxy.web(req, res, { target: 'http://' + getProxyTarget() });
 
 }
 
@@ -66,11 +66,11 @@ HttpServer.listen(80, config.bind);
 if(config.ws){
 
     config.https && HttpsServer.on('upgrade', function (req, socket, head) {
-        proxy.ws(req, socket, head, { target: getProxyTarget() });
+        proxy.ws(req, socket, head, { target: 'ws://' + getProxyTarget() });
     });
 
     HttpServer.on('upgrade', function (req, socket, head) {
-        proxy.ws(req, socket, head, { target: getProxyTarget() });
+        proxy.ws(req, socket, head, { target: 'ws://' + getProxyTarget() });
     });
 
 }

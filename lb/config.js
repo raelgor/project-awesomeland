@@ -5,7 +5,7 @@ module.exports = {
 
     // List of URLs like https://127.0.0.1:80
     servers: [
-        'http://10.240.203.106:81'
+        '10.240.203.106:81'
     ],
 
     // Add if HTTPS requests can be proxied
