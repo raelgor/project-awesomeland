@@ -49,7 +49,8 @@ function requestHandler(req, res) {
 if (config.https) {
     var HttpsServer = https.createServer({
         key: fs.readFileSync(config.https.key),
-        cert: fs.readFileSync(config.https.crt)
+        cert: fs.readFileSync(config.https.crt),
+	passphrase: config.https.passphrase
     }, requestHandler).listen(443, config.bind);
 }
 
