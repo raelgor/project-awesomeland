@@ -1,36 +1,98 @@
-body {
-    margin:0px;
+.gui {
+	poisition: fixed;
 }
-.wrapper {
-      display: inline-block;
-      vertical-align: top;
+.gui {
+	poisition: fixed;
 }
-
-.login-container{
-    background-image: url(/images/other/background.jpg);
-    background-position:50%;
-    background-size:cover;
-    background-repeat:no-repeat;
-    width:100%;
+#viewport {
     height:100%;
+    width:100%;
 }
 
-.login-box {
-    background-color:white;
-    box-shadow:inset 0px 0px 3px 3px grey;
-    height:30px;
-    border:2px solid #0e8277;
-    width:300px;
+#title-box {
+    height:100px;
+    width: 600px;
+    outline: 1px solid;
+    outline-color:black;
+    margin:auto;
 }
 
-.login-logo {
-    background:transparent;
-    line-height:70px;
-    height:80px;
-    width:450px;
-    text-align:center;
-    color:#0E6965;
-    font-size:80px;
-    font-family:'Adobe Song Std';
-    text-shadow:3px 2px 3px #76e2ff;
+#wrapper {
+    height: 800px;
+    width:1000px;
+    outline: 1px solid;
+    outline-color:black;
+    display:block;
+    margin:auto;
+}
+
+#side-box {
+    height: 410px;
+    width: 250px;
+    outline: 1px solid;
+    outline-color:black;
+    display:inline-block;
+    margin-top: 81px;
+}
+
+#main-box {
+    height: 800px;
+    width: 750px;
+    outline: 1px solid;
+    outline-color:black;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#top-box {
+    height: 80px;
+    width: 750px;
+    outline: 1px solid;
+    outline-color:black;
+    display:inline-block;
+    text-align: center;
+}
+
+#fblogin {
+    height: 50px;
+    width: 220px;
+    outline: 1px solid;
+    outline-color:black;
+    margin: 40px auto;
+}
+
+#fbregister {
+    height: 50px;
+    width: 220px;
+    outline: 1px solid;
+    outline-color:black;
+    display:block;
+    margin: 40px auto;
+}
+
+#google {
+    height: 50px;
+    width: 220px;
+    outline: 1px solid;
+    outline-color:black;
+    display:block;
+    margin: 40px auto;
+}
+
+#appstore {
+    height: 50px;
+    width: 220px;
+    outline: 1px solid;
+    outline-color:black;
+    display:block;
+    margin: 40px auto;
+}
+
+.tab {
+    height: 40px;
+    width: 120px;
+    outline: 1px solid;
+    outline-color:black;
+    display:inline-block;
+    margin: 20px 15px;
 }
