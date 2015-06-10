@@ -10,12 +10,12 @@ module.exports = {
 
     // Add if HTTPS requests can be proxied
     https: {
-        key: 'swiftfinger.key',
-        crt: 'swiftfinger.crt'
+        key: 'ssl.key',
+        crt: 'ssl.crt'
     },
 
     // Add if you want to make all requests HTTPS (and wss://)
-    httpRedirectUrl: 'https://swiftfinger.com',
+    httpRedirectUrl: 'https://kingdomsoftheshatteredlands.com',
 
     // Set to true if you want uncaught exceptions to
     // not kill the process
