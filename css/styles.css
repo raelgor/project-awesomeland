@@ -3,19 +3,15 @@
     width:100%;
 }
 
-#title-box {
+#logo-box {
     height:100px;
     width: 600px;
-    outline: 1px solid;
-    outline-color:black;
     margin:auto;
 }
 
 #wrapper {
     height: 800px;
     width:1000px;
-    outline: 1px solid;
-    outline-color:black;
     display:block;
     margin:auto;
 }
@@ -23,8 +19,6 @@
 #side-box {
     height: 410px;
     width: 250px;
-    outline: 1px solid;
-    outline-color:black;
     display:inline-block;
     margin-top: 81px;
 }
@@ -32,52 +26,20 @@
 #main-box {
     height: 800px;
     width: 750px;
-    outline: 1px solid;
-    outline-color:black;
     display:inline-block;
     vertical-align:top;
 }
 
-#top-box {
+#main-nav {
     height: 80px;
     width: 750px;
-    outline: 1px solid;
-    outline-color:black;
     display:inline-block;
     text-align: center;
 }
 
-#fblogin {
+#side-box > div {
     height: 50px;
     width: 220px;
-    outline: 1px solid;
-    outline-color:black;
-    margin: 40px auto;
-}
-
-#fbregister {
-    height: 50px;
-    width: 220px;
-    outline: 1px solid;
-    outline-color:black;
-    display:block;
-    margin: 40px auto;
-}
-
-#google {
-    height: 50px;
-    width: 220px;
-    outline: 1px solid;
-    outline-color:black;
-    display:block;
-    margin: 40px auto;
-}
-
-#appstore {
-    height: 50px;
-    width: 220px;
-    outline: 1px solid;
-    outline-color:black;
     display:block;
     margin: 40px auto;
 }
@@ -85,8 +47,10 @@
 .tab {
     height: 40px;
     width: 120px;
-    outline: 1px solid;
-    outline-color:black;
     display:inline-block;
     margin: 20px 15px;
+}
+
+.wireframe, .wireframe * {
+    outline: 1px dashed black;
 }

@@ -13,8 +13,9 @@ html(lang="en",	ng-app="app")
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js")
 		script(src="/source/app.js")
 	body(ng-view, ng-controller="main")
-		#viewport
-			#title-box
+		#fb-root
+		.wireframe#viewport
+			#logo-box
 			#wrapper
 				#side-box
 					#fblogin(ng-click="fw.fbLogin()")
@@ -22,7 +23,7 @@ html(lang="en",	ng-app="app")
 					#google
 					#appstore
 				#main-box
-					#top-box
+					#main-nav
 						.tab
 						.tab
 						.tab
