@@ -1,54 +1,62 @@
+.gui {
+	poisition: fixed;
+}
 #viewport {
     height:100%;
     width:100%;
+    overflow: hidden;
 }
 
 #logo-box {
-    height:100px;
-    width: 600px;
-    margin:auto;
+  height: 190px;
+  width: 460px;
+  margin: auto;
+  background-image: url(/images/logo.png);
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
 }
 
 #wrapper {
-    height: 800px;
-    width:1000px;
+    height: 540px;
+    width: 790px;
     display:block;
     margin:auto;
 }
 
 #side-box {
-    height: 410px;
-    width: 250px;
+    height: 280px;
+    width: 190px;
     display:inline-block;
     margin-top: 81px;
 }
 
 #main-box {
-    height: 800px;
-    width: 750px;
+    height: 540px;
+    width: 600px;
     display:inline-block;
     vertical-align:top;
 }
 
 #main-nav {
-    height: 80px;
-    width: 750px;
+    height: 60px;
+    width: 600px;
     display:inline-block;
     text-align: center;
 }
 
 #side-box > div {
-    height: 50px;
-    width: 220px;
+    height: 35px;
+    width: 150px;
     display:block;
-    margin: 40px auto;
+    margin: 28px auto;
 }
 
 .tab {
-    height: 40px;
-    width: 120px;
+    height: 30px;
+    width: 90px;
     display:inline-block;
-    margin: 20px 15px;
+    margin: 15px 15px;
 }
 
 .wireframe, .wireframe * {
