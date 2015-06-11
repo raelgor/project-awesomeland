@@ -10,6 +10,18 @@ var shortid = require('shortid'),
 
 module.exports = {
 
+    "fb-auth": function (data, db, req, res) {
+        
+        var FB = require('fb');
+
+        FB.setAccessToken(req.body['fb-access-token']);
+
+        FB.api('/me', function (r) {
+            res.send(r);
+        });
+
+    },
+
     // Login method with username and password that will return user data and a
     // session token if successful
     "login": function (data, db, req, res) {

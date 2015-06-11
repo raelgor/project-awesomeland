@@ -1,10 +1,5 @@
-window.fbAsyncInit = function () {
-    FB.init({
-        appId: '447178132134523',
-        xfbml: true,
-        version: 'v2.3'
-    });
-};
+var fw = {},
+    app = angular.module('app', []);
 
 (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -13,13 +8,3 @@ window.fbAsyncInit = function () {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-var fw = {},
-    app = angular.module('app', []);
-
-
-
-app.controller('main', ["$http", function ($http) {
-
-
-}]);
