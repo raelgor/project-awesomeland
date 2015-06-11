@@ -3,7 +3,10 @@
         "LOGIN_TO_FB": "Log in with Facebook",
         "REGISTER_FB": "Register with Facebook",
         "LOGIN": "Login",
-        "REGISTER": "Register"
+        "REGISTER": "Register",
+        "HOME": "Home",
+        "GAMEPLAY": "Gameplay",
+        "RACES": "Races"
     },
     "game": { 
 
