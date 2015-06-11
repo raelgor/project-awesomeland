@@ -13,11 +13,16 @@ var http = require('http'),
     prompt = require('prompt'),
     wsClients = [],
     path = require('path'),
+    lang = global.lang = {},
     shortid = require('shortid'),
     api = {},
     httpServer = false;
 
 mongodb.connect('mongodb://10.240.203.106:27017/kotsl-system', init);
+
+fs.readdirSync(path.resolve(__dirname + '/lang')).toString().split(',').forEach(function (f) {
+    lang[f.split('.')[0]] = require('./lang/' + f);
+});
 
 function init(err, db) {
 
@@ -93,7 +98,8 @@ function init(err, db) {
         var fn = jade.compileFile(__dirname + '/index.jade');
 
         res.send(fn({
-            version: package.version
+            version: package.version,
+            text: lang.en.site
         }));
 
     });
