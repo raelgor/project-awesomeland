@@ -14,17 +14,17 @@ html(lang="en",	ng-app="app")
 		script(src="/source/app.js")
 	body(ng-view, ng-controller="main")
 		#fb-root
-		.wireframe#viewport
+		#viewport
 			#logo-box
 			#wrapper
 				#side-box
-					#fblogin(ng-click="fw.fbLogin()", alt=text.LOGIN_TO_FB)
-						span Login with
-						a facebook	
+					#fblogin(ng-click="fw.fbLogin()", alt=text.LOGIN)
+						span=text.LOGIN	
 					#fbregister(ng-click="fw.fbLogin()")
+						span=text.REGISTER
 					#google
 					#appstore
-				#main-box
+				.wireframe#main-box
 					#main-nav
 						.tab
 						.tab

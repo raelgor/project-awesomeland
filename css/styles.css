@@ -61,8 +61,14 @@
     outline: 1px dashed black;
 }
 
-#fblogin {
-  background: #3B5998 url(/images/buttons/fb.png) no-repeat -14px -4px;
+#fblogin span, #fbregister span {
+  margin: 0 0 0 21px;
+  color: white;
+  text-shadow: 0px -1px black;
+}
+
+#fblogin, #fbregister {
+  background: #3B5998 url(/images/buttons/fb.png) no-repeat -4px 1px;
   background-size: 40px 35px;
   height: 44px;
   width: 240px;
@@ -77,10 +83,4 @@
   font-size: 13px;
   -webkit-user-select: none;
   -moz-user-select: none;
-}
-
-#fblogin a {
-    font-weight: bold;    
-    font-size: 16px;    color: white;    text-shadow: none;    
-    margin-left: 2px;
 }
