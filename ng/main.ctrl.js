@@ -1,4 +1,23 @@
-﻿app.controller('main', ["$scope", "$window", "$http", function ($scope, $window, $http) {
+﻿app.controller('main', ["$scope", "$window", "$http", "$timeout", function ($scope, $window, $http, $timeout) {
+
+    var preload = [
+        { src: "/images/logo.png", update: "#logo-box" },
+        { src: "/images/buttons/fb.png", update: "#fblogin, #fbregister" },
+        { src: "/images/buttons/googleplay.png", update: "#google" },
+        { src: "/images/buttons/appstore.png", update: "#appstore" }
+    ];
+
+    preload.forEach(function (loadData) {
+
+        var img = new Image();
+
+        img.src = loadData.src;
+
+        img.onload = function () {
+            $(loadData.update).removeClass('unborn');
+        }
+
+    });
 
     $('#fblogin, #fbregister').addClass('disabled');
 

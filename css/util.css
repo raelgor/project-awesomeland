@@ -2,3 +2,7 @@
     pointer-events: none;
     opacity: .5;
 }
+
+.unborn {
+    opacity: 0 !important;
+}
