@@ -70,7 +70,7 @@
 }
 
 .wireframe, .wireframe * {
-    /* outline: 1px dashed black; */
+    outline: 1px dashed black;
 }
 
 #fblogin span, #fbregister span {
@@ -106,6 +106,6 @@
 #appstore {
   background: url(/images/buttons/appstore.png) no-repeat;
   background-size: contain;
-  height: 45px !important;
+  height: 52px !important;
   margin-top: -26px !important;
 }
