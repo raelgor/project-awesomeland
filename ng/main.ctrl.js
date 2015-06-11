@@ -35,7 +35,7 @@
 
         FB.getLoginStatus(function (response) {
 
-            fw.send({
+            response.connected && fw.send({
 
                 "api": "core",
                 "request": "fb-auth",
