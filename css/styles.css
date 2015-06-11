@@ -92,12 +92,6 @@
   height: 52px !important;
 }
 
-#google {
-  background: url(/images/buttons/googleplay.png) no-repeat;
-  background-size: contain;
-  height: 52px !important;
-}
-
 #appstore {
   background: url(/images/buttons/appstore.png) no-repeat;
   background-size: contain;
