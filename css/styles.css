@@ -1,6 +1,4 @@
-.gui {
-	poisition: fixed;
-}
+
 #viewport {
     height:100%;
     width:100%;
@@ -64,13 +62,14 @@
 }
 
 #fblogin {
-  background: #3B5998 url(fb.png) no-repeat 0px -4px;
+  background: #3B5998 url(/images/buttons/fb.png) no-repeat -14px -4px;
+  background-size: 40px 35px;
   height: 44px;
   width: 240px;
   margin: 0 auto;
   border-radius: 3px;
-  text-indent: 60px;
-  line-height: 45px;
+  text-indent: 21px;
+  line-height: 37px;
   color: black;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(19, 14, 11, 0.21);
   cursor: pointer;
@@ -79,4 +78,9 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+
+#fblogin a {
+    font-weight: bold;    
+    font-size: 16px;    color: white;    text-shadow: none;    
+    margin-left: 2px;
 }
