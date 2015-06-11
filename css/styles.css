@@ -48,6 +48,7 @@
     width: 150px;
     display:block;
     margin: 28px auto;
+    cursor: pointer;
 }
 
 .tab {
@@ -83,4 +84,23 @@
   font-size: 13px;
   -webkit-user-select: none;
   -moz-user-select: none;
+}
+
+#google {
+  background: url(/images/buttons/googleplay.png) no-repeat;
+  background-size: contain;
+  height: 52px !important;
+}
+
+#google {
+  background: url(/images/buttons/googleplay.png) no-repeat;
+  background-size: contain;
+  height: 52px !important;
+}
+
+#appstore {
+  background: url(/images/buttons/appstore.png) no-repeat;
+  background-size: contain;
+  height: 45px !important;
+  margin-top: -26px !important;
 }
