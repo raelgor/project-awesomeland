@@ -1,3 +1,6 @@
+.gui {
+	poisition: fixed;
+}
 
 #viewport {
     height:100%;
@@ -53,13 +56,21 @@
 
 .tab {
     height: 30px;
-    width: 90px;
+    width: 100px;
     display:inline-block;
     margin: 15px 15px;
+    background-color: rgb(208, 195, 62);
+    border: outset;
+    border-color: bisque;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: sans-serif;
+    line-height: 24px;
+    text-shadow: 0 1px rgba(215, 213, 186, 1);
 }
 
 .wireframe, .wireframe * {
-    outline: 1px dashed black;
+    /* outline: 1px dashed black; */
 }
 
 #fblogin span, #fbregister span {
