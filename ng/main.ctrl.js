@@ -4,7 +4,9 @@
         { src: "/images/logo.png", update: "#logo-box" },
         { src: "/images/buttons/fb.png", update: "#fblogin, #fbregister" },
         { src: "/images/buttons/googleplay.png", update: "#google" },
-        { src: "/images/buttons/appstore.png", update: "#appstore" }
+        { src: "/images/buttons/appstore.png", update: "#appstore" },
+        { src: "/images/bigboard.png", update: "#main-box" },
+        { src: "/images/bg.jpg", update: "#viewport" }
     ];
 
     preload.forEach(function (loadData) {
