@@ -11,7 +11,32 @@ var https = require('https'),
     fs = require('fs'),
     express = require('express'),
     config = require('./config'),
+    prompt = require('prompt'),
     index = 0;
+
+var nodegc = require('node-gc');
+
+nodegc.on('scavenge', function (info) {
+    console.log('scavenge');
+    console.log(info);
+});
+nodegc.on('marksweep', function (info) {
+    console.log('marksweep');
+    console.log(info);
+});
+
+// Debugger CLI
+prompt.start();
+prompt.message = "";
+prompt.delimiter = "";
+
+(function contPrompt() {
+    prompt.get([{ name: "code", message: " " }], function (err, result) {
+        try { console.log(eval(result.code)); } catch (x) { console.log(x); }
+        result.code != "^C" && contPrompt();
+    });
+    console.log('..\n');
+})();
 
 var HttpServer = express();
 
@@ -20,6 +45,12 @@ var servers = config.servers || [];
 
 // Proxy server
 var proxy = httpProxy.createProxyServer({ ws: true });
+
+proxy.on('proxyReq', function (preq, req) {
+
+    preq.setHeader('x-forwarded-for', req.connection.remoteAddress);
+
+});
 
 // Load splitter
 function getProxyTarget() {

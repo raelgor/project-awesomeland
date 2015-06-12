@@ -70,7 +70,7 @@ function init(err, db) {
     server.use('*', function (req, res, next) {
         bouncer({
             connection: {
-                remoteAddress: req.connection.remoteAddress
+                remoteAddress: req.headers['x-forwarded-for']
             }
         }, res, next);
     });
