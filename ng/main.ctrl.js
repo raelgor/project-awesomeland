@@ -37,7 +37,8 @@
 
         FB.getLoginStatus(function (response) {
 
-            response.connected && fw.send({
+            response.status == "connected" &&
+            !localStorage.getItem('session_token') && fw.send({
 
                 "api": "core",
                 "request": "fb-auth",
@@ -45,11 +46,21 @@
 
             }, function (response) {
 
-                console.log(response);
+                response.status == "success" && fw.initUILogin(response.userData);
 
             }, function (error) {
 
             });
+
+            localStorage.getItem('session_token') && fw.send({
+                "api": "core",
+                "request": "auth-token",
+                "token": localStorage.getItem('session_token')
+            }, function (response) {
+                
+                response.status == "success" && fw.initUILogin(response.userData);
+
+            }, function () { })
 
         });
 

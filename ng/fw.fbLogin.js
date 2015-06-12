@@ -10,7 +10,7 @@ fw.fbLogin = function () {
 
         }, function (response) {
 
-            console.log(response);
+            response.status == "success" && fw.initUILogin(response.userData);
 
         }, function (error) {
 

@@ -16,7 +16,11 @@ var http = require('http'),
     lang = global.lang = {},
     shortid = require('shortid'),
     api = {},
+    FB = global.FB = require('fb'),
     httpServer = false;
+
+bouncer.config.GLOBAL_IP_CHECK_INTERVAL = 10000;
+bouncer.config.GLOBAL_IP_PER_INTERVAL = 100;
 
 mongodb.connect('mongodb://10.240.203.106:27017/kotsl-system', init);
 
@@ -88,7 +92,7 @@ function init(err, db) {
         res.setHeader('Server', 'ZenX/' + package.version);
         return next();
     });
-
+    
     // Get app
     server.get('/', function (req, res, next) {
 
