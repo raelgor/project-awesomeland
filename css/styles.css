@@ -148,6 +148,47 @@
         left: calc( 50% - 395px );
 
     }
+}
+
+@media screen and (max-width:795px) {
+
+    #main-box {
+       opacity:0;
+       pointer-events:none;
+    }
+
+    #side-box {
+        position:fixed;
+        top: calc( 50% - 140px );
+        left: calc( 50% - 95px );
+        margin:0px !important;
+    }
+}
+
+@media screen and (max-width:795px) and (max-height:720px) {
+
+    #logo-box {
+        opacity:1 !important;
+        height:20%;
+        width:100%;
+    }
+
+}
+
+@media screen and (max-width:795px) and (max-height:720px) and (orientation:landscape) {
+
+    #logo-box {
+        position:fixed;
+        left:0px;
+        width:calc(100% - 190px);
+        height:100%;
+
+    }
+
+    #side-box {
+        right:0px;
+        left:initial !important;
+    }
 
 }
 
