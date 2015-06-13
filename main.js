@@ -92,21 +92,6 @@ function init(err, db) {
         res.setHeader('Server', 'ZenX/' + package.version);
         return next();
     });
-    
-    // Get app
-    server.get('/', function (req, res, next) {
-
-        // Cache
-        res.setHeader("Cache-Control", "public,max-age=31104000");
-
-        var fn = jade.compileFile(__dirname + '/index.jade');
-
-        res.send(fn({
-            version: package.version,
-            text: lang.en.site
-        }));
-
-    });
 
     // Handle API calls
     server.post('/api', function (req, res, next) {
@@ -133,6 +118,23 @@ function init(err, db) {
 
     });
 
+    // Get app
+    server.use('/', function (req, res, next) {
+
+        if (req.path != "/") return next();
+
+        // Cache
+        res.setHeader("Cache-Control", "public,max-age=31104000");
+
+        var fn = jade.compileFile(__dirname + '/index.jade');
+
+        res.send(fn({
+            version: package.version,
+            text: lang.en.site
+        }));
+
+    });
+
     // Cache if proceeding to static content
     server.use(function (req, res, next) {
 
@@ -146,7 +148,7 @@ function init(err, db) {
     server.use(express.static(__dirname + '/assets/'));
 
     // Custom 404
-    server.get('*', function (req, res, next) {
+    server.use('*', function (req, res, next) {
 
         res.writeHead(404, 'Not found');
         res.end('404: "It will be there, but it will be as if it isn\'t." - Father Paisios about this page.');
