@@ -162,3 +162,10 @@
     font-weight: bold;
     font-size: 26px;
 }
+
+#version {
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
+  font-size: 14px;
+}
