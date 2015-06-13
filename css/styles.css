@@ -12,7 +12,7 @@
   height: 190px;
   width: 460px;
   margin: auto;
-  background-image: url(/images/logo.png);
+  background-image: url(/images/logo-beta.png);
   background-size: contain;
   background-position: 50%;
   background-repeat: no-repeat;
@@ -73,7 +73,7 @@
 .tab {
   width: 105px;
   display: inline-block;
-  margin: 15px 15px;
+  margin: 15px 7px;
   background-color: rgb(173, 63, 63);
   border: outset 5px;
   border-color: rgb(208, 87, 87);
@@ -149,4 +149,16 @@
 
     }
 
+}
+
+.home-title, .home-welcome-text {
+    text-align: left;
+    margin: 22px 0 0 72px;
+    width: 450px;
+    color: rgb(84, 54, 0);
+}
+
+.home-title {
+    font-weight: bold;
+    font-size: 26px;
 }

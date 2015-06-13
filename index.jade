@@ -18,7 +18,7 @@ html(lang="en",	ng-app="app")
 	body(ng-view, ng-controller="main")
 		#fb-root
 		.unborn.ani04#viewport
-			.unborn.ani04#logo-box
+			a.unborn.ani04#logo-box(href="/")
 			#wrapper
 				#side-box
 					.unborn.ani04#fblogin(ng-click="fw.fbLogin()", alt=text.LOGIN)
@@ -30,6 +30,9 @@ html(lang="en",	ng-app="app")
 				#main-box
 					#main-nav
 						.tab#home-tab=text.HOME
-						.tab#gameplay-tab=text.GAMEPLAY
-						.tab#races-tab=text.RACES
+						.disabled.tab#gameplay-tab=text.GAMEPLAY
+						.disabled.tab#races-tab=text.RACES
+						.disabled.tab#news-tab=text.NEWS
+						.home-title=text.HOME_TITLE
+						.home-welcome-text=text.HOME_WELCOME_TEXT
 				
