@@ -6,7 +6,8 @@
         { src: "/images/buttons/googleplay.png", update: "#google" },
         { src: "/images/buttons/appstore.png", update: "#appstore" },
         { src: "/images/bigboard.png", update: "#main-box" },
-        { src: "/images/bg.jpg", update: "#viewport" }
+        { src: "/images/bg.jpg", update: "#viewport" },
+        { src: "/images/board.png", update: "#side-box" }
     ];
 
     preload.forEach(function (loadData) {
