@@ -1,5 +1,7 @@
 ﻿app.controller('main', ["$scope", "$window", "$http", "$timeout", function ($scope, $window, $http, $timeout) {
 
+    if (localStorage.getItem('session_token')) $('#side-box > *').addClass('disabled');
+
     // Preload images
     var preload = [
         { src: "/images/logo.png", update: "#logo-box" },
@@ -22,7 +24,7 @@
         // Images will show even if loading was unsuccessful
         img.onerror = handler;
 
-        function handler() { (loadData.update).removeClass('unborn');  }
+        function handler() { $(loadData.update).removeClass('unborn');  }
 
     });
 
@@ -60,19 +62,19 @@
             });
             */
 
-            localStorage.getItem('session_token') && fw.send({
+            if(localStorage.getItem('session_token')) fw.send({
                 "api": "core",
                 "request": "auth-token",
                 "token": localStorage.getItem('session_token')
             }, function (response) {
                 
+                $('#side-box > *').removeClass('disabled');
                 response.status == "success" && fw.initUILogin(response.userData);
 
             }, function () { })
+            else $('#side-box > *').removeClass('disabled');
 
         });
-
-        $('#fblogin, #fbregister').removeClass('disabled');
 
     };
 
