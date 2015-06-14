@@ -292,4 +292,61 @@ form {
   width: 150px !important;
   cursor: default !important;
 }
+
+#logout-button {
+  width: 136px;
+  text-shadow: 0px 1px rgba(255, 255, 255, 0.21);
+  text-align: center;
+  margin: 14px 0 0 4px;
+  cursor: pointer;
+  color: rgb(56, 36, 0);
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 0px;
+}
+
+.logout-text {
+    position: relative;
+    left: 52%;
+    margin: 0 0 0 -50%;
+}
+
+.l-yes, .l-sep, .l-no, .q-mark {
+    opacity: 0;
+}
+
+.l-yes, .l-sep, .l-no {
+    float:right;
+    pointer-events: none;
+}
+
+.l-sep {
+    margin: 0px 6px;
+}
+
+.on .logout-text {
+    left: 30px !important;
+}
+
+.on .l-yes, .on .l-sep, .on .l-no, .on .q-mark {
+    pointer-events: all;
+    opacity: 1;
+    transition-delay: .4s;
+    -webkit-transition-delay: .4s;
+    -ms-transition-delay: .4s;
+    -o-transition-delay: .4s;
+    -moz-delay: .4s;
+}
+
+.l-yes {
+    margin-right: 5px
+}
+
+.l-yes:hover, .l-no:hover {
+    color: beige;
+    transition-delay: 0s;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    -moz-delay: 0s;
 }

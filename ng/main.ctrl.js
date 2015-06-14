@@ -2,6 +2,10 @@
 
     if (localStorage.getItem('session_token')) $('#side-box > *').addClass('disabled');
 
+    $('#logout-button').click(function () { $(this).toggleClass('on') });
+
+    $(window).click(fw.click);
+
     // Preload images
     var preload = [
         { src: "/images/logo.png", update: "#logo-box" },

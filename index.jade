@@ -39,6 +39,12 @@ html(lang="en",	ng-app="app")
 							option Server 3
 							option Server 4
 						#play-button=text.PLAY_NOW
+						#logout-button
+							span.ani04.logout-text=text.LOGOUT
+								span.ani04.q-mark ?
+							span.ani04.l-no=text.NO
+							span.ani04.l-sep |
+							span.ani04.l-yes(ng-click="fw.logout()")=text.YES
 				.unborn.ani04#main-box
 					#main-nav
 						.tab#home-tab=text.HOME
