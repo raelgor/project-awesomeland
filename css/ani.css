@@ -5,3 +5,11 @@
     -o-transition: all linear .4s;
     -moz-transition: all linear .4s;
 }
+
+.ani02 {
+    transition: all linear .2s;
+    -webkit-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+}
