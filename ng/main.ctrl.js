@@ -42,6 +42,8 @@
 
         FB.getLoginStatus(function (response) {
 
+            // Auto login code
+            /*
             response.status == "connected" &&
             !localStorage.getItem('session_token') && fw.send({
 
@@ -56,6 +58,7 @@
             }, function (error) {
 
             });
+            */
 
             localStorage.getItem('session_token') && fw.send({
                 "api": "core",
