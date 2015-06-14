@@ -1,5 +1,6 @@
 ﻿app.controller('main', ["$scope", "$window", "$http", "$timeout", function ($scope, $window, $http, $timeout) {
 
+    // Preload images
     var preload = [
         { src: "/images/logo.png", update: "#logo-box" },
         { src: "/images/buttons/fb.png", update: "#fblogin, #fbregister" },
@@ -16,9 +17,12 @@
 
         img.src = loadData.src;
 
-        img.onload = function () {
-            $(loadData.update).removeClass('unborn');
-        }
+        img.onload = handler;
+
+        // Images will show even if loading was unsuccessful
+        img.onerror = handler;
+
+        function handler() { (loadData.update).removeClass('unborn');  }
 
     });
 
