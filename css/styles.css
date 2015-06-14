@@ -161,7 +161,7 @@
         position:fixed;
         top: calc( 50% - 140px );
         left: calc( 50% - 95px );
-        margin:0px !important;
+        margin:15px 0 0 0 !important;
     }
 }
 
@@ -188,6 +188,7 @@
     #side-box {
         right:0px;
         left:initial !important;
+        margin:0px !important;
     }
 
 }
