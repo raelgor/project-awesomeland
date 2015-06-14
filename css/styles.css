@@ -234,18 +234,13 @@ form {
 
 
 #player-name {
-    height: 18px;
     width: 90px;
     font-size: 11px;
     margin-left: 4px;
     display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 #nickname {
-    height: 20px;
     font-weight: bold;
     font-size: 14px;
     width: auto;        
@@ -287,9 +282,14 @@ form {
     overflow: hidden;
     margin: 0 0 0 6px;
     width: 90px;
+    height: 20px;
+    line-height: 20px;
+    padding: 1px;
 }
 
 #login-ui {
   margin: 24px 0 0 24px !important;
   width: 150px !important;
+  cursor: default !important;
+}
 }
