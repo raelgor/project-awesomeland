@@ -9,7 +9,8 @@
         "RACES": "Races",
         "NEWS": "News",
         "HOME_TITLE": "Welcome to Kingdoms of the Shattered Lands Beta!",
-        "HOME_WELCOME_TEXT": "We're glad to see you are interested in participating in the game's beta testing. Use the login with Facebook feature and you will be notified when the beta servers are up. See you soon!"
+        "HOME_WELCOME_TEXT": "We're glad to see you are interested in participating in the game's beta testing. Use the login with Facebook feature and you will be notified when the beta servers are up. See you soon!<br/><br/>If you want to support this project, any donation will do.",
+        "PLAY_NOW": "Play Now!"    
     },
     "game": { 
 

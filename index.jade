@@ -21,21 +21,32 @@ html(lang="en",	ng-app="app")
 		.unborn.ani04#viewport
 			a.unborn.ani04#logo-box(href="/")
 			#wrapper
-				#side-box
+				.unborn.ani04#side-box
 					.unborn.ani04#fblogin(ng-click="fw.fbLogin()", alt=text.LOGIN)
 						span=text.LOGIN	
 					.unborn.ani04#fbregister(ng-click="fw.fbLogin()")
 						span=text.REGISTER
 					.unborn.ani04#google
 					.unborn.ani04#appstore
-				#main-box
+					.out#login-ui
+						#fbpic
+						#login-wrapper
+							#nickname
+							#player-name
+						select#server-select
+							option Server 1
+							option Server 2
+							option Server 3
+							option Server 4
+						#play-button=text.PLAY_NOW
+				.unborn.ani04#main-box
 					#main-nav
 						.tab#home-tab=text.HOME
 						.disabled.tab#gameplay-tab=text.GAMEPLAY
 						.disabled.tab#races-tab=text.RACES
 						.disabled.tab#news-tab=text.NEWS
 					.home-title=text.HOME_TITLE
-					.home-welcome-text=text.HOME_WELCOME_TEXT
+					.home-welcome-text!=text.HOME_WELCOME_TEXT
 					form(action="https://www.paypal.com/cgi-bin/webscr", method="post", target="_blank")
 						input(type="hidden", name="cmd", value="_s-xclick")
 						input(type="hidden" name="hosted_button_id", value="HEPHDTB6KLEP4")
