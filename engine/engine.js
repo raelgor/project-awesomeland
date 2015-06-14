@@ -1,4 +1,5 @@
-﻿// Game engine class
+﻿/*
+// Game engine class
 var ShatteredEngine = SE = function () {
 
     // The engines state STARTING|RUNNING|STOPPING|STOPPED
@@ -121,3 +122,37 @@ var battle = new Game.battle.Combat({
     })
 
 });
+*/
+
+function GameEngine(db) {
+
+    var classScope = this;
+
+    this.availableServersCached = [];
+
+    this.getAvailableServers = function (callback) {
+
+        db.collection('Games').find({ "public": "1" }).toArray(function (err, result) {
+
+            classScope.availableServersCached = result;
+            callback && callback(err, result);
+
+        });
+
+    }
+
+    this.getAvailableServersSync = function () {
+        return classScope.availableServersCached;
+    }
+
+    this.timers = {};
+
+    this.timers.runtimeIntervals = [];
+
+    this.timers.runtimeIntervals.push(setInterval(this.getAvailableServers, 1000 * 60 * 60 * 1));
+
+    this.getAvailableServers();
+
+}
+
+module.exports = GameEngine;

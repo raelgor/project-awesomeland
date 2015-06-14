@@ -17,7 +17,9 @@ var http = require('http'),
     shortid = require('shortid'),
     api = {},
     FB = global.FB = require('fb'),
-    httpServer = false;
+    httpServer = false,
+    GameEngine = null;
+
 
 bouncer.config.GLOBAL_IP_CHECK_INTERVAL = 10000;
 bouncer.config.GLOBAL_IP_PER_INTERVAL = 100;
@@ -29,6 +31,12 @@ fs.readdirSync(path.resolve(__dirname + '/lang')).toString().split(',').forEach(
 });
 
 function init(err, db) {
+
+    var GE = require('./engine/engine.js');
+
+    GameEngine = global.GameEngine = new GE(db);
+
+    global.db = db;
 
     fs.readdirSync(path.resolve(__dirname + '/api')).toString().split(',').forEach(function (module) {
 

@@ -21,6 +21,18 @@
 
     $("#nickname").html(userData.nickname);
 
+    $('#server-select *').remove();
+
+    userData.servers.forEach(function (server) {
+
+        var option = $('<option>');
+
+        option.attr('data-server-id', server.id)
+              .html(server.name);
+
+        $('#server-select').append(option);
+
+    });
 
     // Log user data
     console.log(userData);

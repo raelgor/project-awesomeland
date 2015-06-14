@@ -7,14 +7,17 @@ var shortid = require('shortid'),
     ],
     jadeTemplates = {},
     fs = require('fs'),
-    FB = global.FB;
+    FB = global.FB,
+    GameEngine = global.GameEngine;
 
 module.exports = {
 
     "auth-token": function (data, db, req, res) {
 
+        // Target database
         var Users = db.collection('Users');
 
+        // Find user
         Users.find({
             tokens: {
                 $elemMatch: {
@@ -26,6 +29,7 @@ module.exports = {
 
             var user = users[0];
 
+            // If found, return data
             if (user) {
 
                 res.send(JSON.stringify({
@@ -36,13 +40,14 @@ module.exports = {
                         last_name: user.last_name,
                         token: req.body.token,
                         nickname: user.nickname,
-                        fbid: user.fbdata.id
+                        fbid: user.fbdata.id,
+                        servers: GameEngine.getAvailableServersSync()
                     }
 
                 }));
 
+            // Otherwise complain
             } else res.send('{"message":"bad_request"}');
-
 
         });
 
@@ -114,7 +119,8 @@ module.exports = {
                                 last_name: user.last_name,
                                 token: session_token,
                                 nickname: user.nickname,
-                                fbid: user.fbdata.id
+                                fbid: user.fbdata.id,
+                                servers: GameEngine.getAvailableServersSync()
                             }
 
                         }));
@@ -126,7 +132,8 @@ module.exports = {
                             "last_name": String(response.last_name || ""),
                             "nickname": "",
                             "token": session_token,
-                            "fbid": response.id
+                            "fbid": response.id,
+                            servers: GameEngine.getAvailableServersSync()
                         }
 
                         Users.insert({
