@@ -132,7 +132,7 @@ function init(err, db) {
         if (req.path != "/") return next();
 
         // Cache
-        res.setHeader("Cache-Control", "public,max-age=31104000");
+        // res.setHeader("Cache-Control", "public,max-age=31104000");
 
         var fn = jade.compileFile(__dirname + '/index.jade');
 
