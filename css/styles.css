@@ -137,8 +137,13 @@
 @media screen and (max-height: 720px){
 
     #logo-box {
-        height: 0px;
-        opacity: 0;
+
+        height: 100px;
+        opacity: 1;
+        position: fixed;
+        top: calc(50% - 284px);
+        left: calc(50% - 538px);
+
     }
 
     #wrapper {
