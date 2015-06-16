@@ -376,3 +376,10 @@ form {
     -o-transition: 0s;
     -moz-transition: 0s;
 }
+
+.tab:active {
+      box-shadow: 0 0 0 0;
+      background-color: rgb(208, 87, 87);
+      border-color: rgb(173, 63, 63);
+      border:inset;
+}
