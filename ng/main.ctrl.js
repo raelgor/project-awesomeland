@@ -8,7 +8,7 @@
 
     // Preload images
     var preload = [
-        { src: "/images/logo.png", update: "#logo-box" },
+        { src: "/images/logo-beta.png", update: "#logo-box" },
         { src: "/images/buttons/fb.png", update: "#fblogin, #fbregister" },
         { src: "/images/buttons/googleplay.png", update: "#google" },
         { src: "/images/buttons/appstore.png", update: "#appstore" },
@@ -48,35 +48,15 @@
 
         FB.getLoginStatus(function (response) {
 
-            // Auto login code
-            /*
-            response.status == "connected" &&
-            !localStorage.getItem('session_token') && fw.send({
-
+            fw.send({
                 "api": "core",
-                "request": "fb-auth",
-                "fb-access-token": response.authResponse.accessToken
-
+                "request": "auth-token"
             }, function (response) {
 
-                response.status == "success" && fw.initUILogin(response.userData);
-
-            }, function (error) {
-
-            });
-            */
-
-            if(localStorage.getItem('session_token')) fw.send({
-                "api": "core",
-                "request": "auth-token",
-                "token": localStorage.getItem('session_token')
-            }, function (response) {
-                
                 $('#side-box > *').removeClass('disabled');
                 response.status == "success" && fw.initUILogin(response.userData);
 
-            }, function () { })
-            else $('#side-box > *').removeClass('disabled');
+            }, function () { });
 
         });
 

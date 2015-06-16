@@ -11,15 +11,27 @@ var http = require('http'),
     mongodb = require('mongodb').MongoClient,
     _ = require('lodash'),
     prompt = require('prompt'),
-    wsClients = [],
+    wsClients = global.wsClients = [],
     path = require('path'),
     lang = global.lang = {},
     shortid = require('shortid'),
     api = {},
     FB = global.FB = require('fb'),
     httpServer = false,
-    GameEngine = null;
+    GameEngine = null,
+    helmet = require('helmet'),
+    cookieParser = require('cookie-parser');
 
+var nodegc = require('node-gc');
+
+nodegc.on('scavenge', function (info) {
+    console.log('scavenge');
+    console.log(info);
+});
+nodegc.on('marksweep', function (info) {
+    console.log('marksweep');
+    console.log(info);
+});
 
 bouncer.config.GLOBAL_IP_CHECK_INTERVAL = 10000;
 bouncer.config.GLOBAL_IP_PER_INTERVAL = 100;
@@ -83,6 +95,13 @@ function init(err, db) {
         }, res, next);
     });
 
+    server.post('/api', function (req, res, next) {
+
+        if (!(req.headers['x-csrf-token'] in GameEngine.auth.sessions)) return res.end('invalid-csrf');
+        next();
+
+    });
+
     // Parse json api requests
     server.use(bodyParser.json({
         extended: true
@@ -91,16 +110,21 @@ function init(err, db) {
     // Place bouncer for JSON API only
     server.use('*', function (req, res, next) { bouncer(req, res, next, true); });
 
-    // Use compression on all requests
-    server.use(compression({ filter: function () { return true; } }));
-    server.disable('x-powered-by');
-
     // Add server stamp globally
     server.use('*', function (req, res, next) {
         res.setHeader('Server', 'ZenX/' + package.version);
+        res.setHeader('Connection', 'Keep-Alive');
+        res.setHeader('Keep-Alive', 'timeout=15, max=100');
         return next();
     });
 
+    server.use(helmet.xssFilter());
+    server.use(cookieParser());
+
+    // Use compression on all requests
+    server.use(compression({ filter: function () { return true; } }));
+    server.disable('x-powered-by');
+    
     // Handle API calls
     server.post('/api', function (req, res, next) {
 
@@ -110,19 +134,19 @@ function init(err, db) {
             if (reqApi.auth && !reqApi.ws) {
 
                 db.collection('Users').find({
-                    tokens: { $elemMatch: { token: String(req.body.token) } }
+                    tokens: { $elemMatch: { token: String(req.cookies.authtoken) } }
                 }, { _id: 1 }).toArray(function (err, user) {
 
-                    if (err) return res.send('{"message":"bad_request"}');
+                    if (err) return res.send('{"message":"bad_request","error_code":"1"}');
 
                     reqApi(req.body, db, req, res, user[0]);
 
                 });
 
             } else if (!reqApi.ws) reqApi(req.body, db, req, res);
-            else res.send('{"message":"bad_request"}');
+            else res.send('{"message":"bad_request","error_code":"2"}');
 
-        } catch (x) { res.send('{"message":"bad_request"}'); }
+        } catch (x) { res.send('{"message":"bad_request","error_code":"3"}'); }
 
     });
 
@@ -132,19 +156,21 @@ function init(err, db) {
         if (req.path != "/") return next();
 
         // Cache
-        // res.setHeader("Cache-Control", "public,max-age=31104000");
+        res.setHeader("Cache-Control", "public,max-age=31104000");
+        res.setHeader("Content-Security-Policy", "default-src 'self' kingdomsoftheshatteredlands.com;script-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com crypto-js.googlecode.com connect.facebook.net;object-src kingdomsoftheshatteredlands.com;img-src *.akamaihd.net graph.facebook.com www.facebook.com kingdomsoftheshatteredlands.com www.paypalobjects.com;media-src kingdomsoftheshatteredlands.com;frame-src kingdomsoftheshatteredlands.com *.facebook.com;font-src kingdomsoftheshatteredlands.com fonts.gstatic.com;connect-src kingdomsoftheshatteredlands.com;style-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com fonts.googleapis.com; frame-ancestors apps.facebook.com");
 
         var fn = jade.compileFile(__dirname + '/index.jade');
 
         res.send(fn({
             version: package.version,
-            text: lang.en.site
+            text: lang.en.site,
+            csrf: GameEngine.auth.newSession()
         }));
 
     });
 
     // Cache if proceeding to static content
-    server.use(function (req, res, next) {
+    server.get('*', function (req, res, next) {
 
         // Cache
         res.setHeader("Cache-Control", "public,max-age=31104000");
@@ -153,7 +179,7 @@ function init(err, db) {
     });
 
     // Directly access static content
-    server.use(express.static(__dirname + '/assets/'));
+    server.get('*', express.static(__dirname + '/assets/'));
 
     // Custom 404
     server.use('*', function (req, res, next) {
@@ -165,6 +191,10 @@ function init(err, db) {
 
     // Bind to port and start
     httpServer = http.createServer(server).listen(81, '10.240.203.106');
+
+    httpServer.on('connection', function (socket) {
+        socket.setTimeout(15 * 1000);
+    });
 
     // Immortalize process
     process.on('uncaughtException', function (err) {

@@ -78,11 +78,17 @@ function requestHandler(req, res) {
 
 // If SSL is on, start HTTPS server
 if (config.https) {
+
     var HttpsServer = https.createServer({
         key: fs.readFileSync(config.https.key),
         cert: fs.readFileSync(config.https.crt),
-	passphrase: config.https.passphrase
+	    passphrase: config.https.passphrase
     }, requestHandler).listen(443, config.bind);
+
+    HttpsServer.on('connection', function (socket) {
+        socket.setTimeout(15000);
+    });
+
 }
 
 // Redirect to HTTPS

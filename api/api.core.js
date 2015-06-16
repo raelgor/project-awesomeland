@@ -21,7 +21,7 @@ module.exports = {
         Users.find({
             tokens: {
                 $elemMatch: {
-                    token: String(req.body.token),
+                    token: String(req.cookies.authtoken),
                     expires: { $gt: new Date().getTime() }
                 }
             }
@@ -32,13 +32,13 @@ module.exports = {
             // If found, return data
             if (user) {
 
+                res.cookie('authtoken', req.cookies.authtoken, { maxAge: 900000, httpOnly: true, secure: true });
                 res.send(JSON.stringify({
 
                     "status": "success",
                     "userData": {
                         first_name: user.first_name,
                         last_name: user.last_name,
-                        token: req.body.token,
                         nickname: user.nickname,
                         fbid: user.fbdata.id,
                         servers: GameEngine.getAvailableServersSync()
@@ -71,7 +71,7 @@ module.exports = {
                 }).toArray(function (err, users) {
 
                     var user = users[0],
-                        session_token = shortid.generate() + shortid.generate();
+                        session_token = GameEngine.uuid();
 
                     if (user) {
 
@@ -110,14 +110,14 @@ module.exports = {
 
                         // Push session token in document's tokens
                         Users.update({ _id: user._id }, { $push: { tokens: { token: session_token, expires: new Date().getTime() + 24 * 60 * 60 * 1000 } } });
-                        
+
+                        res.cookie('authtoken', session_token, { maxAge: 900000, httpOnly: true, secure: true });
                         res.send(JSON.stringify({
 
                             "status": "success",
                             "userData": {
                                 first_name: user.first_name,
                                 last_name: user.last_name,
-                                token: session_token,
                                 nickname: user.nickname,
                                 fbid: user.fbdata.id,
                                 servers: GameEngine.getAvailableServersSync()
@@ -127,11 +127,11 @@ module.exports = {
 
                     } else {
 
+                        res.cookie('authtoken', session_token, { maxAge: 900000, httpOnly: true, secure: true });
                         var uData = {
                             "first_name": String(response.first_name || "Anonymous"),
                             "last_name": String(response.last_name || ""),
                             "nickname": "",
-                            "token": session_token,
                             "fbid": response.id,
                             servers: GameEngine.getAvailableServersSync()
                         }
@@ -168,195 +168,33 @@ module.exports = {
         
     },
 
-    // Login method with username and password that will return user data and a
-    // session token if successful
-    "login": function (data, db, req, res) {
-
-        // Get the users collection
-        var collection = db.collection('Users');
-
-        // Get username and password from request data
-        var username = String(data.username),
-            password = String(data.password);
-
-        authenticate();
-
-        function authenticate() {
-
-            // Find the user that wants to log in
-            collection.find({ username: username }).toArray(function (err, user) {
-
-                var user = user[0],
-                    valid_login = user && require('password-hash').verify(password, user.password);
-
-                // Verify with hashed password
-                if (valid_login) {
-
-                    // Create a new session token
-                    var session_token = shortid.generate(),
-                        // Set an expiration date
-                        expires = new Date().getTime() + 24 * 60 * 60 * 1000;
-
-                    // Clean expired or invalid tokens
-                    collection.update({ username: username }, {
-                        $pull: {
-                            tokens: {
-                                $or: [
-                                    { expires: { $lte: new Date().getTime() } },
-                                    { expires: { $type: 2 } }
-                                ]
-                            }
-                        }
-                    }, function () {
-
-                        // If more than 10 tokens, delete until 10
-                        collection.aggregate([
-                            { $match: { username: username } },
-                            { $project: { count: { $size: "$tokens" } } }
-                        ], function (err, data) {
-
-                            var data = data[0];
-
-                            if (data.count - 10 > 0) {
-
-                                for (var i = 0; i < data.count - 10; i++) {
-                                    collection.update({ username: username }, { $unset: JSON.parse('{"tokens.' + i + '":1}') });
-                                }
-
-                                collection.update({ username: username }, { $pull: { tokens: null } });
-
-                            }
-
-                        });
-
-                    });
-
-                    // Push session token in document's tokens
-                    collection.update({ username: username }, { $push: { tokens: { token: session_token, expires: expires } } });
-
-                    // Remove password and other tokens from response
-                    delete user.password;
-                    delete user.tokens;
-
-                    // Send response
-                    res.send(JSON.stringify({
-                        "message": "success",
-                        "user": user,
-                        "token": session_token,
-                        "text": require(path.resolve(__dirname + './../lang.js'))[user.lang || 'en']
-                    }));
-
-                } else {
-                    res.send(JSON.stringify({
-                        "message": "bad_request"
-                    }));
-                }
-
-            });
-
-        }
-
-    },
-
-    // Called first when a new WebSocket connection opens from the client
-    // in order to authenticate for use of features like chat or notifications
-    "ws-auth": function (data, db, req, socket) {
+    "logout": function (data, db, req, res) {
 
         var collection = db.collection('Users');
 
-        collection.find({
-            tokens: {
-                $elemMatch: {
-                    token: String(data.token),
-                    expires: { $gt: new Date().getTime() }
-                }
-            }
-        }, { _id: 1, tokens: 1 }).toArray(function (err, user) {
+        if (!req.cookies.authtoken) return res.end();
 
-            if (user.length) {
-
-                socket.ZenXAuth = true;
-                socket.ZenXUser = user[0]._id;
-                socket.ZenXToken = data.token;
-                socket.send(JSON.stringify({
-                    "requestID": data.requestID,
-                    "message": "success"
-                }));
-
-                // Kill socket when token expires
-                var expires = user[0].tokens.filter(function (t) {
-                    return t.token == data.token
-                })[0].expires - new Date().getTime();
-
-                socket.expiresTimeout = setTimeout(function () {
-                    socket.close();
-                }, expires);
-
-            } else {
-
-                socket.send(JSON.stringify({
-                    "requestID": data.requestID,
-                    "message": "bad_request"
-                }));
-
-            }
-
-        });
-
-
-    },
-
-    // Validates a session token to initialize the client
-    "auth": function (data, db, req, res) {
-
-        var collection = db.collection('Users');
-
-        collection.find({
-            tokens: {
-                $elemMatch: {
-                    token: data.token,
-                    expires: { $gt: new Date().getTime() }
-                }
-            }
-        }, { password: 0, tokens: 0 }).toArray(function (err, user) {
-
-            if (user.length) {
-
-                res.send(JSON.stringify({
-                    "message": "success",
-                    "user": user[0],
-                    "token": data.token,
-                    "text": require(path.resolve(__dirname + './../lang.js'))[user[0].lang || 'en']
-                }));
-
-            } else {
-
-                res.send(JSON.stringify({
-                    "message": "bad_request"
-                }));
-
-            }
-
-        });
-
-    },
-
-    // Destroys the token and all open WebSockets associated with it
-    "purge-token": function (data, db, req, socket) {
-
-        var collection = db.collection('Users');
-
-        collection.update({ tokens: { $elemMatch: { token: data.token } } }, {
+        collection.update({ tokens: { $elemMatch: { token: req.cookies.authtoken } } }, {
             $pull: {
                 tokens: {
-                    token: String(data.token)
+                    token: String(req.cookies.authtoken)
                 }
             }
         });
 
         global.wsClients.forEach(function (socket) {
-            socket.token == data.token && socket.close();
+            socket.token == req.cookies.authtoken && socket.close();
         });
+
+        res.clearCookie('authtoken');
+        res.end();
+
+    },
+
+    "refresh-session": function (data, db, req, res) {
+
+        var token = GameEngine.auth.newSession();
+        res.send('{"session_token":"' + token + '"}');
 
     }
 
