@@ -167,7 +167,7 @@ function init(err, db) {
 
         // Cache
         res.setHeader("Cache-Control", "public,max-age=31104000");
-        res.setHeader("Content-Security-Policy", "default-src 'self' kingdomsoftheshatteredlands.com;script-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com crypto-js.googlecode.com connect.facebook.net;object-src kingdomsoftheshatteredlands.com;img-src *.akamaihd.net graph.facebook.com www.facebook.com kingdomsoftheshatteredlands.com www.paypalobjects.com;media-src kingdomsoftheshatteredlands.com;frame-src kingdomsoftheshatteredlands.com *.facebook.com;font-src kingdomsoftheshatteredlands.com fonts.gstatic.com;connect-src kingdomsoftheshatteredlands.com;style-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com fonts.googleapis.com; frame-ancestors apps.facebook.com");
+        res.setHeader("Content-Security-Policy", "default-src 'self' kingdomsoftheshatteredlands.com;script-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com crypto-js.googlecode.com connect.facebook.net;object-src kingdomsoftheshatteredlands.com;img-src *.akamaihd.net graph.facebook.com www.facebook.com kingdomsoftheshatteredlands.com www.paypalobjects.com;media-src kingdomsoftheshatteredlands.com;frame-src kingdomsoftheshatteredlands.com *.facebook.com;font-src kingdomsoftheshatteredlands.com fonts.gstatic.com;connect-src wss://kingdomsoftheshatteredlands.com kingdomsoftheshatteredlands.com;style-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com fonts.googleapis.com; frame-ancestors apps.facebook.com");
 
         var fn = jade.compileFile(__dirname + '/index.jade');
 
@@ -222,53 +222,79 @@ function init(err, db) {
     // Start listening for websocket connections
     global.wss.on('connection', function (socket) {
 
+        var token;
+
         if (!bouncer({
             connection: {
             remoteAddress: socket.upgradeReq.client.remoteAddress
         }
         })) return socket.close();
 
-        // Save the new socket
-        wsClients.push(socket);
+        token = socket.upgradeReq.headers.cookie.split('authtoken=')[1].split(';')[0];
 
-        // Handle messages
-        socket.on('message', function (data, flags) {
+        if (!token) return socket.close();
 
-            try {
+        // Find user
+        db.collection('Users').find({
+            tokens: {
+                $elemMatch: {
+                    token: String(token),
+                    expires: { $gt: new Date().getTime() }
+                }
+            }
+        }).toArray(function (err, users) {
 
-                var message = JSON.parse(data);
+            var user = users[0];
 
-                if (!bouncer({
-                    connection: {
-                    remoteAddress: socket.upgradeReq.client.remoteAddress
-                },
-                    body: message
-                }, false, false, true)) return socket.send('{"message":"bad_request_bounced"}');
+            // If found, return data
+            if (user) initSocket(user._id); else {
 
-                if (socket.ZenXAuth || (message.api == "core" && message.request == "ws-auth")) {
+                socket.send('{"message":"bad_request"}');
+                socket.close();
+
+            }
+
+        });
+
+        function initSocket(uid) {
+
+            socket.UserID = uid;
+
+            // Save the new socket
+            wsClients.push(socket);
+
+            // Handle messages
+            socket.on('message', function (data, flags) {
+
+                try {
+
+                    var message = JSON.parse(data);
+
+                    if (!bouncer({
+                        connection: {
+                        remoteAddress: socket.upgradeReq.client.remoteAddress
+                    },
+                        body: message
+                    }, false, false, true)) return socket.send('{"message":"bad_request_bounced"}');
 
                     var reqApi = api[message.api][message.request];
 
-                    reqApi(message, db, data, socket, {
-                        _id: socket.ZenXUser
+                    reqApi.ws && reqApi(message, db, data, socket, {
+                        _id: socket.UserID
                     });
 
+                } catch (x) {
+                    socket.send('{"message":"bad_request"}');
                 }
 
-            } catch (x) { socket.send('{"message":"bad_request"}'); }
+            });
 
-        });
+            // Remove from memory if closed
+            socket.on('close', function () {
+                _.remove(wsClients, socket);
+            });
 
-        // Remove from memory if closed
-        socket.on('close', function () {
-            clearTimeout(socket.expiresTimeout);
-            _.remove(wsClients, socket);
-        });
-
-        // Kill socket if not authenticated within time limit
-        socket.expiresTimeout = setTimeout(function () {
-            if (!socket.ZenXAuth) socket.close();
-        }, 7000);
+        }
 
     });
 

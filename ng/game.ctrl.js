@@ -9,4 +9,6 @@
     bgMusic.src = '/audio/heaven-ish.ogg';
     bgMusic.play();
 
+    fw.connectWebSocket();
+
 }]);

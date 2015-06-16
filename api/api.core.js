@@ -5,6 +5,9 @@ var shortid = require('shortid'),
     jade = global.jade,
     reqAuth = [
     ],
+    reqWs = [
+        "talk"
+    ],
     jadeTemplates = {},
     fs = require('fs'),
     FB = global.FB,
@@ -46,9 +49,13 @@ module.exports = {
 
                 }));
 
-            // Otherwise complain
-            } else res.send('{"message":"bad_request"}');
+                // Otherwise complain
+            } else {
 
+                res.clearCookie('authtoken');
+                res.send('{"message":"bad_request"}');
+
+            }
         });
 
     },
@@ -196,6 +203,15 @@ module.exports = {
         var token = GameEngine.auth.newSession();
         res.send('{"session_token":"' + token + '"}');
 
+    },
+
+    "talk": function (data, db, req, socket) {
+
+        socket.send(JSON.stringify({
+            "message": "sup",
+            "requestID": data.requestID
+        }));
+
     }
 
 }
@@ -204,4 +220,8 @@ module.exports = {
 // to this method
 reqAuth.forEach(function (request) {
     module.exports[request].auth = true;
+});
+
+reqWs.forEach(function (request) {
+    module.exports[request].ws = true;
 });

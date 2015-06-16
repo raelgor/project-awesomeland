@@ -8,11 +8,9 @@ fw.fbLogin = function () {
             "request": "fb-auth",
             "fb-access-token": FB.getAccessToken()
 
-        }, function (response) {
+        }).success(function (response) {
 
             response.status == "success" && fw.initUILogin(response.userData);
-
-        }, function (error) {
 
         });
 

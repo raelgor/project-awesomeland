@@ -61,12 +61,12 @@
             fw.send({
                 "api": "core",
                 "request": "auth-token"
-            }, function (response) {
+            }).success(function (response) {
 
                 $('#side-box > *').removeClass('disabled');
                 response.status == "success" && fw.initUILogin(response.userData);
 
-            }, function () { });
+            });
 
         });
 
