@@ -362,7 +362,7 @@ form {
     -moz-delay: 0s;
 }
 
-.tab:hover ,#play-button {
+.tab:hover ,#play-button:hover {
     background-color:rgb(181, 82, 82);
     border-color:rgb(213, 104, 104);
     color:rgba(254, 254, 228, 0.85);
