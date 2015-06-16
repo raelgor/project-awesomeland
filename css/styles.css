@@ -377,7 +377,7 @@ form {
     -moz-transition: 0s;
 }
 
-.tab:active {
+.tab:active, play-button:active {
       box-shadow: 0 0 0 0;
       background-color: rgb(208, 87, 87);
       border-color: rgb(173, 63, 63);
