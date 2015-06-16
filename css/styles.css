@@ -361,3 +361,18 @@ form {
     -o-transition-delay: 0s;
     -moz-delay: 0s;
 }
+
+.tab:hover ,#play-button {
+    background-color:rgb(181, 82, 82);
+    border-color:rgb(213, 104, 104);
+    color:rgba(254, 254, 228, 0.85);
+}
+
+#fblogin:hover, #fbregister:hover {
+    box-shadow: 0px 2px 3px rgba(155, 80, 8, 0.6),0 0 2px 2px rgba(255, 255, 255, 0.6);
+    transition: 0s;
+    -webkit-transition: 0s;
+    -ms-transition: 0s;
+    -o-transition: 0s;
+    -moz-transition: 0s;
+}
