@@ -6,6 +6,16 @@
 
     $(window).click(fw.click);
 
+    $scope.gui = {
+        gameTemplate: ''
+    };
+
+    $scope.playNow = function () {
+
+        $scope.gui.gameTemplate = '/game';
+
+    }
+
     // Preload images
     var preload = [
         { src: "/images/logo-beta.png", update: "#logo-box" },

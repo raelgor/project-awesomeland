@@ -20,7 +20,7 @@ html(lang="en",	ng-app="app")
 		#fb-root
 		#version=version
 		.unborn.ani04#viewport
-			.gui(ng-include="gameTemplate")
+			.ani04.unborn.gui(ng-include="gui.gameTemplate")
 			a.unborn.ani04#logo-box(href="/")
 			#wrapper
 				.unborn.ani04#side-box
@@ -36,7 +36,7 @@ html(lang="en",	ng-app="app")
 							#nickname
 							#player-name
 						select#server-select
-						#play-button=text.PLAY_NOW
+						#play-button(ng-click="playNow()")=text.PLAY_NOW
 						#logout-button
 							span.ani02.logout-text=text.LOGOUT
 								span.ani02.q-mark ?
