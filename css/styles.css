@@ -380,6 +380,5 @@ form {
 .tab:active, play-button:active {
       box-shadow: 0 0 0 0;
       background-color: rgb(208, 87, 87);
-      border-color: rgb(173, 63, 63);
-      border:inset;
+      border: inset rgb(221, 111, 111);
 }
