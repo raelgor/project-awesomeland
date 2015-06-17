@@ -35,7 +35,7 @@ module.exports = {
             // If found, return data
             if (user) {
 
-                res.cookie('authtoken', req.cookies.authtoken, { maxAge: 900000, httpOnly: true, secure: true });
+                res.cookie('authtoken', req.cookies.authtoken, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true });
                 res.send(JSON.stringify({
 
                     "status": "success",
@@ -118,7 +118,7 @@ module.exports = {
                         // Push session token in document's tokens
                         Users.update({ _id: user._id }, { $push: { tokens: { token: session_token, expires: new Date().getTime() + 24 * 60 * 60 * 1000 } } });
 
-                        res.cookie('authtoken', session_token, { maxAge: 900000, httpOnly: true, secure: true });
+                        res.cookie('authtoken', session_token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true });
                         res.send(JSON.stringify({
 
                             "status": "success",
@@ -134,7 +134,7 @@ module.exports = {
 
                     } else {
 
-                        res.cookie('authtoken', session_token, { maxAge: 900000, httpOnly: true, secure: true });
+                        res.cookie('authtoken', session_token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true });
                         var uData = {
                             "first_name": String(response.first_name || "Anonymous"),
                             "last_name": String(response.last_name || ""),
