@@ -165,8 +165,8 @@ function init(err, db) {
 
         if (req.path != "/") return next();
 
-        // Cache
-        res.setHeader("Cache-Control", "public,max-age=31104000");
+        // The sole initial provider of a csrf token should not be cached
+        res.setHeader("Cache-Control", "no-store");
         res.setHeader("Content-Security-Policy", "default-src 'self' kingdomsoftheshatteredlands.com;script-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com crypto-js.googlecode.com connect.facebook.net;object-src kingdomsoftheshatteredlands.com;img-src *.akamaihd.net graph.facebook.com www.facebook.com kingdomsoftheshatteredlands.com www.paypalobjects.com;media-src kingdomsoftheshatteredlands.com;frame-src kingdomsoftheshatteredlands.com *.facebook.com;font-src kingdomsoftheshatteredlands.com fonts.gstatic.com;connect-src wss://kingdomsoftheshatteredlands.com kingdomsoftheshatteredlands.com;style-src 'unsafe-inline' kingdomsoftheshatteredlands.com ajax.googleapis.com fonts.googleapis.com; frame-ancestors apps.facebook.com");
 
         var fn = jade.compileFile(__dirname + '/index.jade');
