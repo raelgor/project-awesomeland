@@ -294,7 +294,7 @@ function init(err, db) {
                     });
 
                 } catch (x) {
-                    socket.send('{"message":"bad_request"}');
+                    socket.send('{"message":"bad_request", "err": "' + String(x) + '"}');
                 }
 
             });

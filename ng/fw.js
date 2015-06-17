@@ -1,4 +1,8 @@
-var fw = {},
+var fw = {
+        me: {
+            dialog: {}
+        }
+    },
     app = angular.module('app', []);
 
 (function (d, s, id) {

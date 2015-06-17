@@ -1,21 +1,27 @@
 ﻿app.controller('me', ['$scope', function ($scope) {
 
-   
     setTimeout(function () { $('.gui').removeClass('unborn'); }, 100);
    
     fw.connectWebSocket();
 
     $scope.newMap = function () {
 
-        fw.createWindow({ content: "<a>Hi</a>" });
+        fw.createWindow({
+            title: "New map",
+            content: "Hi"
+        });
 
-    };
+    }
 
     $scope.openMap = function () {
 
         var windowContent = $('<div>');
         windowContent.html("<a>Loading...</a>");
-        fw.createWindow({ content: windowContent });
+
+        fw.createWindow({
+            content: windowContent
+        });
+
         fw.send({ api: "me", request: "avail-maps" }, true).success(function (response) {
 
             windowContent.find('a').remove();
@@ -24,12 +30,11 @@
 
                 windowContent.append("<div>" + file + "</div>");
 
-            })
+            });
 
-        })
+        });
 
-
-    };
+    }
 
 
 

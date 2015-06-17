@@ -4,6 +4,7 @@ var shortid = require('shortid'),
     path = require('path'),
     jade = global.jade,
     reqAuth = [
+        "avail-maps"
     ],
     reqWs = [
         "avail-maps"
@@ -15,9 +16,9 @@ var shortid = require('shortid'),
 
 module.exports = {
 
-
     "avail-maps": function (data, db, req, socket) {
-        fs.readdir(function (err, files) {
+
+        fs.readdir(path.resolve(__dirname + '/../maps'), function (err, files) {
     
             socket.send(JSON.stringify({
                 "files": files,
@@ -26,7 +27,6 @@ module.exports = {
 
         });
         
-
     }
 
 }
