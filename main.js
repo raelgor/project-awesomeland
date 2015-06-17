@@ -150,6 +150,16 @@ function init(err, db) {
 
     });
 
+    server.use('/me', function (req, res, next) {
+
+        res.setHeader("Cache-Control", "public,max-age=31104000");
+
+        var fn = jade.compileFile(__dirname + '/me.jade');
+
+        res.send(fn({}));
+
+    });
+
     server.use('/game', function (req, res, next) {
 
         res.setHeader("Cache-Control", "public,max-age=31104000");

@@ -1,0 +1,45 @@
+#toolbar>div>div>div:hover {
+  background-color: rgb(223, 223, 223);
+}
+#toolbar>div>div>div {
+  padding: 3px 11px;
+  cursor: pointer;
+}
+#toolbar .exp-opt > div {
+  display: block !important;
+}
+#toolbar>div>div {
+  display: none;
+  position: absolute;
+  background-color: rgb(239, 239, 239);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.27);
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-color: white;
+  border-radius: 0 0 3px 3px;
+}
+#toolbar {
+    background-color: rgb(197, 197, 197);
+    width: calc(100% - 200px);
+    height: 29px;
+    border-bottom: 1px solid rgb(245, 245, 245);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+    font-size: 14px;
+}
+
+#toolbar > div > a:hover, #toolbar .exp-opt > a {
+    background-color: rgb(239, 239, 239);
+}
+
+#toolbar > div > a {
+    height: 29px;
+    display: inline-block;
+    padding: 4px;
+    cursor: pointer;
+}
+
+#toolbar > div {
+    display:inline-block;
+    vertical-align:top;
+}

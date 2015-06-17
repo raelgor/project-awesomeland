@@ -23,16 +23,6 @@ window.fbAsyncInit = function () {
 
     FB.getLoginStatus(function (response) {
 
-        window.p = fw.send({
-            "api": "core",
-            "request": "auth-token"
-        }).success(function (response) {
-
-            $('#side-box > *').removeClass('disabled');
-            response.status == "success" && fw.initUILogin(response.userData);
-
-        }).error(function (err) { console.log(err); });
-
     });
 
 };

@@ -44,7 +44,9 @@ module.exports = {
                         last_name: user.last_name,
                         nickname: user.nickname,
                         fbid: user.fbdata.id,
-                        servers: GameEngine.getAvailableServersSync()
+                        servers: GameEngine.getAvailableServersSync(),
+                        admin: user.admin
+                        
                     }
 
                 }));
@@ -127,7 +129,8 @@ module.exports = {
                                 last_name: user.last_name,
                                 nickname: user.nickname,
                                 fbid: user.fbdata.id,
-                                servers: GameEngine.getAvailableServersSync()
+                                servers: GameEngine.getAvailableServersSync(),
+                                admin: user.admin
                             }
 
                         }));

@@ -8,9 +8,15 @@
         gameTemplate: ''
     };
 
-    $scope.playNow = function () {
+    $scope.playNow = function (e) {
 
-        $scope.gui.gameTemplate = '/game';
+        if (e.ctrlKey && fw.user.admin == "1") {
+
+            $scope.gui.gameTemplate = '/me';
+
+        }
+
+        else $scope.gui.gameTemplate = '/game';
 
     }
 
@@ -53,5 +59,21 @@
     $('#fblogin, #fbregister').addClass('disabled');
 
     $scope.fw = fw;
+
+    fw.send({
+        "api": "core",
+        "request": "auth-token"
+    }).success(function (response) {
+
+        $('#side-box > *').removeClass('disabled');
+
+        if (response.status == "success") {
+
+            fw.initUILogin(response.userData);
+            fw.user = response.userData;
+
+        }
+
+    }).error(function (err) { console.log(err); });
 
 }]);
