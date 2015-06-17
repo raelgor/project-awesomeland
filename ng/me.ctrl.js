@@ -5,4 +5,11 @@
    
     fw.connectWebSocket();
 
+    $scope.newMap = function () {
+
+        fw.createWindow({ content: "<a>Hi</a>" })
+
+    }
+
 }]);
+

@@ -6,5 +6,6 @@
 
     $('.exp-opt').not(tar.parent()).removeClass('exp-opt');
     tar.is('#toolbar > div > a') && tar.parent().toggleClass('exp-opt');
+    tar.is('.window-x') && tar.parent().remove();
 
 }
