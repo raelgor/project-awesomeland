@@ -16,6 +16,16 @@
 
     }
 
+    // Keep session valid
+    setInterval(function () {
+        fw.send({
+            api: "core",
+            request: "refresh-session"
+        }).success(function (r) {
+            fw.csrf = r.session_token;
+        });
+    }, 50 * 1000);
+
     // Preload images
     var preload = [
         { src: "/images/logo-beta.png", update: "#logo-box" },
