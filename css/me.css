@@ -43,3 +43,19 @@
     display:inline-block;
     vertical-align:top;
 }
+
+#me-sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    background-color: white;
+    border-left: 1px solid rgb(219, 219, 219);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.27);
+}
+
+#me-wrapper {
+  background-color: gray;
+  height: 100%;
+}
