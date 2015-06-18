@@ -268,6 +268,13 @@ function init(err, db) {
 
         function initSocket(user) {
 
+            // Only one active connection per player
+            wsClients.forEach(function (s) {
+
+                s.user._id == user._id && s.close();
+
+            });
+
             socket.user = user;
 
             // Save the new socket
