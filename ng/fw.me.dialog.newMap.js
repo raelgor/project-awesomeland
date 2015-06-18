@@ -20,4 +20,21 @@
         content: element
     });
 
-}
+    element.find('#create-new-map').click(function () {
+
+        fw.send({
+            api: "me",
+            request: "create-map",
+            name: element.find("#new-map-name").val(),
+            x: element.find("new-map-x").val(),
+            y: element.find("new-map-y").val()
+        }, true).success(function (response) {
+
+            fw.loadMap(response.mapData);
+
+        });
+
+    });
+
+  
+};
