@@ -35,6 +35,49 @@ module.exports = {
         });
 
     },
+
+    "create-map": function (data, db, req, socket) {
+
+        var mapskel = require(path.resolve(__dirname + '/../mapskel.json')),
+            mapFile = mapskel;
+
+        if (data.file) {
+
+            fs.readFile(path.resolve(__dirname + '/../maps/' + data.file), function (err, file) {
+
+                mapFile = JSON.parse(String(file));
+                mapFile.name = data.name;
+
+                save(mapFile);
+
+                socket.send(JSON.stringify({
+                    "requestID": data.requestID,
+                    "mapData": JSON.strigify(mapFile)
+                }));
+
+            });
+
+        } else {
+
+            mapFile.name = data.name;
+            mapFile.map.x = data.x;
+            mapFile.map.y = data.y;
+
+            save(mapFile);
+
+            socket.send(JSON.stringify({
+                "requestID": data.requestID,
+                "mapData": JSON.stringify(mapFile)
+            }));
+
+        }
+
+        function save(jsonObj) {
+
+            fs.writeFile(path.resolve(__dirname + '/../maps/' + jsonObj.name + '.kotsl'), JSON.stringify(jsonObj));
+
+        }
+
     }
 
 }
