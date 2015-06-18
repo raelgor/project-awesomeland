@@ -4,7 +4,7 @@
    
     fw.connectWebSocket();
 
-    $scope.newMap = fw.me.dialog.newMap;
+    $scope.fw = fw;
 
     $scope.openMap = function () {
 
