@@ -21,6 +21,20 @@ module.exports = {
 
         });
         
+    },
+
+    "load-map": function (data, db, req, socket) {
+
+        fs.readFile(path.resolve(__dirname + '/../maps/' + data.file), function (err, file) {
+
+            socket.send(JSON.stringify({
+                "requestID": data.requestID,
+                "mapData": String(file)
+            }));
+
+        });
+
+    },
     }
 
 }
