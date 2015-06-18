@@ -91,10 +91,52 @@
 
 .window-x:hover {
     opacity: 1;
+    background: rgba(247, 14, 14, 0.58);
 }
 
 .win-title {
-  padding: 5px 10px;
-  font-weight: bold;
-  color: gray;
+    padding: 2px 10px;
+    color: rgb(60, 39, 39);
+    border: 2px solid rgba(169, 153, 141, 0.57);
+    height: 30px;
+    box-shadow: 0px 1px 0px rgb(118, 96, 96);
+}
+
+.x {
+    width: 23px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top:10px
+}
+
+.y {
+    width: 23px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top:10px;
+}
+
+#new-map-x {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+#new-map-y {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin-left: 10px;
+}
+
+#create-new-map {
+    margin: 10px 0 0 10px;
+    display:block;
+}
+
+#new-map-name {
+    display: block;
+    margin: 5px 0 0 5px;
+    font-size: 100%;
+    font-family: inherit;
 }
