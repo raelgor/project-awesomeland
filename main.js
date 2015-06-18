@@ -257,7 +257,7 @@ function init(err, db) {
             var user = users[0];
 
             // If found, return data
-            if (user) initSocket(user._id); else {
+            if (user) initSocket(user); else {
 
                 socket.send('{"message":"bad_request"}');
                 socket.close();
@@ -266,9 +266,9 @@ function init(err, db) {
 
         });
 
-        function initSocket(uid) {
+        function initSocket(user) {
 
-            socket.UserID = uid;
+            socket.user = user;
 
             // Save the new socket
             wsClients.push(socket);
@@ -289,8 +289,10 @@ function init(err, db) {
 
                     var reqApi = api[message.api][message.request];
 
+                    if (reqApi.admin && user.admin != "1") throw "admin_permission_required";
+
                     reqApi.ws && reqApi(message, db, data, socket, {
-                        _id: socket.UserID
+                        _id: socket.user._id
                     });
 
                 } catch (x) {

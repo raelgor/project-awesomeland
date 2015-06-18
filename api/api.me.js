@@ -3,12 +3,6 @@
 var shortid = require('shortid'),
     path = require('path'),
     jade = global.jade,
-    reqAuth = [
-        "avail-maps"
-    ],
-    reqWs = [
-        "avail-maps"
-    ],
     jadeTemplates = {},
     fs = require('fs'),
     FB = global.FB,
@@ -33,10 +27,8 @@ module.exports = {
 
 // Set auth flag to declare that only authenticated users can have access
 // to this method
-reqAuth.forEach(function (request) {
+Object.keys(module.exports).forEach(function (request) {
     module.exports[request].auth = true;
-});
-
-reqWs.forEach(function (request) {
     module.exports[request].ws = true;
+    module.exports[request].admin = true;
 });
