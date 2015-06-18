@@ -70,7 +70,6 @@
         if (response.status == "success") {
 
             fw.initUILogin(response.userData);
-            fw.user = response.userData;
 
         }
 

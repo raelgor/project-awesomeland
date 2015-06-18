@@ -4,14 +4,7 @@
    
     fw.connectWebSocket();
 
-    $scope.newMap = function () {
-
-        fw.createWindow({
-            title: "New map",
-            content: "Hi"
-        });
-
-    }
+    $scope.newMap = fw.me.dialog.newMap;
 
     $scope.openMap = function () {
 

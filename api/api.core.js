@@ -143,6 +143,7 @@ module.exports = {
                             "last_name": String(response.last_name || ""),
                             "nickname": "",
                             "fbid": response.id,
+                            "admin": "0",
                             servers: GameEngine.getAvailableServersSync()
                         }
 

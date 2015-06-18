@@ -1,0 +1,19 @@
+﻿{
+    "name": "",
+    "description": "",
+    "version": "",
+    "id": "",
+    "tiles": { },
+    "map": {
+        "x": "",
+        "y": "",
+        "terrains": { },
+        "objects": {
+            "int": { },
+            "noint": { }
+        }
+    },
+    "units": { },
+    "spells": { },
+    "civilizations": { }
+}

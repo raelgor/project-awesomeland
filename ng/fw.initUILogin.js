@@ -1,5 +1,7 @@
 ﻿fw.initUILogin = function (userData) {
 
+    fw.user = userData;
+
     // Save the token we just received or verified
     localStorage.setItem('session_token', userData.token);
     window.session_token = userData.token;
